@@ -1,4 +1,4 @@
-# ☕ Mini Coffee Shop — Full Stack Application
+# ☕ Rich Coffee Shop — Full Stack Application
 
 A full-stack mini e-commerce system for a coffee shop, built as a complete connected platform including a mobile app, backend API, and admin dashboard.
 
