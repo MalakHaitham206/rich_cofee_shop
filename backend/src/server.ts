@@ -10,7 +10,12 @@ import adminRoutes from './routes/admin.js'
 
 dotenv.config()
 const app = Fastify()
-app.register(cors)
+app.register(cors, {
+  origin: ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  credentials: true,
+})
 app.register(jwt, {
  secret: process.env.JWT_SECRET!,
 })

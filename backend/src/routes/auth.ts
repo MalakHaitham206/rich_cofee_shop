@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 import supabase from '../lib/supabase.js';
 import { authenticate } from '../middleware/auth.js';
+import { createClient } from '@supabase/supabase-js';
 
 const registerSchema = z.object({
   name: z.string().min(2),
@@ -67,7 +68,13 @@ export default async function authRoutes(fastify: FastifyInstance) {
     try {
       const { email, password } = loginSchema.parse(request.body);
 
-      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      const authClient = createClient(
+        process.env.SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!,
+        { auth: { persistSession: false, autoRefreshToken: false } }
+      );
+
+      const { data: authData, error: authError } = await authClient.auth.signInWithPassword({
         email,
         password,
       });
@@ -89,7 +96,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
 
       // Generate Fastify JWT token
       const token = fastify.jwt.sign(
-       
+
         {
           id: authData.user.id,
           role: profileData.role,
@@ -129,7 +136,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
       return reply.status(500).send({ message: 'Internal Server Error' });
     }
   });
-  
+
   //Current user profile — protected
   fastify.get('/me', { preHandler: authenticate }, async (request, reply) => {
     try {
@@ -149,6 +156,20 @@ export default async function authRoutes(fastify: FastifyInstance) {
           role: profileData.role,
         },
       });
+    } catch (error: any) {
+      fastify.log.error(error);
+      return reply.status(500).send({ message: 'Internal Server Error' });
+    }
+  }
+  );
+  // logout
+  fastify.post('/logout', { preHandler: authenticate }, async (request, reply) => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        return reply.status(400).send({ message: error.message });
+      }
+      return reply.send({ message: 'Logged out successfully' });
     } catch (error: any) {
       fastify.log.error(error);
       return reply.status(500).send({ message: 'Internal Server Error' });

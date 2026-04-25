@@ -11,7 +11,7 @@ const createProductSchema = z.object({
   name: z.string().min(3),
   description: z.string().optional(),
   price: z.number().positive(),
-  image_url: z.url().optional(),
+  image_url: z.string().url().or(z.literal('')).optional(),
   category_id: z.uuid(),
 });
 const updateProductSchema = createProductSchema.partial();
@@ -19,15 +19,17 @@ const updateProductSchema = createProductSchema.partial();
 export default async function adminRoutes(fastify: FastifyInstance) {
   fastify.addHook('preHandler', requireAdmin);
 
-  // --- ORDERS ---
-
   fastify.get('/orders', async (request, reply) => {
     try {
       const { data, error } = await supabase
         .from('orders')
         .select(`
           *,
-          profiles (id, name, email)
+          profiles (id, name),
+          order_items (
+            id, order_id, product_id, quantity, unit_price,
+            products (id, name, image_url)
+          )
         `)
         .order('created_at', { ascending: false });
 
@@ -35,7 +37,7 @@ export default async function adminRoutes(fastify: FastifyInstance) {
 
       return reply.send(data);
     } catch (error) {
-      fastify.log.error(error);
+      console.error('ERROR in GET /admin/orders:', error);
       return reply.status(500).send({ message: 'Internal Server Error' });
     }
   });
