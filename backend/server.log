@@ -1,0 +1,84 @@
+
+> backend@1.0.0 dev
+> tsx watch src/server.ts
+
+◇ injected env (4) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+Server running at http://[::1]:3000
+8:04:05 AM [tsx] change in ./src/routes/categories.ts Restarting...
+c◇ injected env (4) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+Server running at http://[::1]:3000
+8:06:55 AM [tsx] change in ./src/routes/categories.ts Restarting...
+c◇ injected env (4) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+Server running at http://[::1]:3000
+8:06:58 AM [tsx] change in ./src/routes/categories.ts Restarting...
+c◇ injected env (4) from .env // tip: ⌘ enable debugging { debug: true }
+◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+Server running at http://[::1]:3000
+8:07:00 AM [tsx] change in ./src/routes/categories.ts Restarting...
+c◇ injected env (4) from .env // tip: ⌘ enable debugging { debug: true }
+◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+Server running at http://[::1]:3000
+8:07:03 AM [tsx] change in ./src/routes/categories.ts Restarting...
+c8:07:03 AM [tsx] change in ./src/routes/categories.ts Restarting...
+c◇ injected env (4) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+Server running at http://[::1]:3000
+8:07:41 AM [tsx] change in ./src/routes/categories.ts Restarting...
+c◇ injected env (4) from .env // tip: ⌘ suppress logs { quiet: true }
+◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+Server running at http://[::1]:3000
+8:50:55 AM [tsx] change in ./src/routes/categories.ts Restarting...
+c◇ injected env (4) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+Server running at http://[::1]:3000
+Categories query result: [
+  {
+    id: '40b3d871-40cd-4008-ad23-c0b71a9c8cdc',
+    name: 'Desserts',
+    slug: 'desserts'
+  },
+  {
+    id: '4d5929fd-bbba-4b22-a269-28020c681407',
+    name: 'Hot Drinks',
+    slug: 'hot-drinks'
+  },
+  {
+    id: 'fbceb347-5ee8-4a61-90f2-9feacd0386fd',
+    name: 'Iced Drinks',
+    slug: 'iced-drinks'
+  }
+] null
+Categories query result: [
+  {
+    id: '40b3d871-40cd-4008-ad23-c0b71a9c8cdc',
+    name: 'Desserts',
+    slug: 'desserts'
+  },
+  {
+    id: '4d5929fd-bbba-4b22-a269-28020c681407',
+    name: 'Hot Drinks',
+    slug: 'hot-drinks'
+  },
+  {
+    id: 'fbceb347-5ee8-4a61-90f2-9feacd0386fd',
+    name: 'Iced Drinks',
+    slug: 'iced-drinks'
+  }
+] null
+8:51:34 AM [tsx] change in ./src/routes/categories.ts Restarting...
+c◇ injected env (4) from .env // tip: ⌘ override existing { override: true }
+◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+Server running at http://[::1]:3000
+8:51:43 AM [tsx] change in ./src/routes/categories.ts Restarting...
+c◇ injected env (4) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+Server running at http://[::1]:3000
+12:48:53 PM [tsx] change in ./src/routes/orders.ts Restarting...
+c◇ injected env (4) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+Server running at http://[::1]:3000
+2:34:19 PM [tsx] change in ./src/routes/orders.ts Restarting...
+2:34:24 PM [tsx] Process didn't exit in 5s. Force killing...

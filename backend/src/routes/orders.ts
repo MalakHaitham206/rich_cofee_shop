@@ -66,17 +66,35 @@ export default async function orderRoutes(fastify: FastifyInstance) {
         order_id: orderData.id,
       }));
 
-      const { error: itemsError } = await supabase.from('order_items').insert(itemsWithOrderId);
+      const { data: insertedItems, error: itemsError } = await supabase
+        .from('order_items')
+        .insert(itemsWithOrderId)
+        .select();
 
       if (itemsError) throw itemsError;
 
-      return reply.status(201).send({ message: 'Order placed successfully', order_id: orderData.id });
+      // Fetch the full order with items and products to return
+      const { data: fullOrder, error: fullOrderError } = await supabase
+        .from('orders')
+        .select(`
+          *,
+          order_items (
+            id, quantity, unit_price,
+            products (id, name, image_url)
+          )
+        `)
+        .eq('id', orderData.id)
+        .single();
+
+      if (fullOrderError) throw fullOrderError;
+
+      return reply.status(201).send(fullOrder);
     } catch (error: any) {
       if (error instanceof z.ZodError) {
         return reply.status(400).send({ message: 'Validation error', errors: (error as any).errors });
       }
       fastify.log.error(error);
-      return reply.status(500).send({ message: 'Internal Server Error' });
+      return reply.status(500).send({ message: error?.message || 'Internal Server Error', stack: error?.stack });
     }
   });
 
@@ -86,7 +104,13 @@ export default async function orderRoutes(fastify: FastifyInstance) {
 
       const { data, error } = await supabase
         .from('orders')
-        .select('*')
+        .select(`
+          *,
+          order_items (
+            id, quantity, unit_price,
+            products (id, name, image_url)
+          )
+        `)
         .eq('user_id', userId)
         .order('created_at', { ascending: false });
 

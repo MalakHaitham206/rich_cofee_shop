@@ -54,10 +54,27 @@ export default async function orderRoutes(fastify) {
                 ...item,
                 order_id: orderData.id,
             }));
-            const { error: itemsError } = await supabase.from('order_items').insert(itemsWithOrderId);
+            const { data: insertedItems, error: itemsError } = await supabase
+                .from('order_items')
+                .insert(itemsWithOrderId)
+                .select();
             if (itemsError)
                 throw itemsError;
-            return reply.status(201).send({ message: 'Order placed successfully', order_id: orderData.id });
+            // Fetch the full order with items and products to return
+            const { data: fullOrder, error: fullOrderError } = await supabase
+                .from('orders')
+                .select(`
+          *,
+          order_items (
+            id, quantity, unit_price,
+            products (id, name, image_url)
+          )
+        `)
+                .eq('id', orderData.id)
+                .single();
+            if (fullOrderError)
+                throw fullOrderError;
+            return reply.status(201).send(fullOrder);
         }
         catch (error) {
             if (error instanceof z.ZodError) {
@@ -72,7 +89,13 @@ export default async function orderRoutes(fastify) {
             const userId = request.user.id;
             const { data, error } = await supabase
                 .from('orders')
-                .select('*')
+                .select(`
+          *,
+          order_items (
+            id, quantity, unit_price,
+            products (id, name, image_url)
+          )
+        `)
                 .eq('user_id', userId)
                 .order('created_at', { ascending: false });
             if (error)
