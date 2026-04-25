@@ -14,16 +14,14 @@ export default async function authRoutes(fastify) {
     fastify.post('/register', async (request, reply) => {
         try {
             const { name, email, password } = registerSchema.parse(request.body);
-            // Create user in Supabase Auth
-            const { data: authData, error: authError } = await supabase.auth.signUp({
+            // Use admin API to create user with auto email confirmation
+            const { data: authData, error: authError } = await supabase.auth.admin.createUser({
                 email,
                 password,
-                options: {
-                    data: {
-                        name,
-                        role: 'customer',
-                        email,
-                    },
+                email_confirm: true,
+                user_metadata: {
+                    name,
+                    role: 'customer',
                 },
             });
             if (authError) {
@@ -78,9 +76,8 @@ export default async function authRoutes(fastify) {
             const token = fastify.jwt.sign({
                 id: authData.user.id,
                 role: profileData.role,
-                exp: 60 * 60 * 24 * 7, // 7 days
                 email: email,
-            });
+            }, { expiresIn: '7d' });
             return reply.send({
                 message: 'Logged in successfully',
                 token,
@@ -133,6 +130,20 @@ export default async function authRoutes(fastify) {
                     role: profileData.role,
                 },
             });
+        }
+        catch (error) {
+            fastify.log.error(error);
+            return reply.status(500).send({ message: 'Internal Server Error' });
+        }
+    });
+    // logout
+    fastify.post('/logout', { preHandler: authenticate }, async (request, reply) => {
+        try {
+            const { error } = await supabase.auth.signOut();
+            if (error) {
+                return reply.status(400).send({ message: error.message });
+            }
+            return reply.send({ message: 'Logged out successfully' });
         }
         catch (error) {
             fastify.log.error(error);
