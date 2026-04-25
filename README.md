@@ -226,10 +226,4 @@ A 4–5 minute walkthrough video is included covering:
 * Clean and consistent UI across mobile and dashboard
 * **Note on Dummy Data**: The mobile app UI contains some dummy placeholder data (e.g., the address and phone number on the Profile page). This was added strictly to achieve high fidelity with the provided UI design references, though it is not a required feature of the backend task.
 
----
 
-## 👨‍💻 Author
-
-Developed as part of a full-stack challenge.
-
----
