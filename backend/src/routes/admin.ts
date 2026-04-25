@@ -27,7 +27,7 @@ export default async function adminRoutes(fastify: FastifyInstance) {
         .from('orders')
         .select(`
           *,
-          profiles (id, name, email)
+          profiles (id, name)
         `)
         .order('created_at', { ascending: false });
 
