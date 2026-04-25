@@ -39,7 +39,7 @@ export const CartItemCard: React.FC<CartItemCardProps> = ({ item, onRemove }) =>
         
         {/* Right: Price */}
         <View style={styles.priceContainer}>
-          <Text style={styles.currencyText}>INR</Text>
+          <Text style={styles.currencyText}>EGP</Text>
           <Text style={styles.priceValueText}>{(Number(item.product.price) * item.quantity).toFixed(2)}</Text>
         </View>
       </View>

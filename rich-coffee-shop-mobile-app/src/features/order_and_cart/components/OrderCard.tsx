@@ -37,7 +37,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order, isHistory }) => {
       {/* Top Row: Date & Price */}
       <View style={styles.topRow}>
         <Text style={styles.dateText}>{dateTimeString}</Text>
-        <Text style={styles.priceText}>INR {Number(order.total_amount).toFixed(2)}</Text>
+        <Text style={styles.priceText}>EGP {Number(order.total_amount).toFixed(2)}</Text>
       </View>
 
       <View style={styles.contentRow}>

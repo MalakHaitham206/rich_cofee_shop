@@ -19,7 +19,7 @@ export const CheckoutBottomBar: React.FC<CheckoutBottomBarProps> = ({ totalPrice
         {/* Total Price Section */}
         <View style={styles.priceSection}>
           <Text style={styles.totalPriceLabel}>Total Price</Text>
-          <Text style={styles.totalPriceValue}>INR {totalPrice.toFixed(2)}</Text>
+          <Text style={styles.totalPriceValue}>EGP {totalPrice.toFixed(2)}</Text>
         </View>
 
         {/* Next Button Section */}

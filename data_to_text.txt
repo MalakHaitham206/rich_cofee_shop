@@ -1,0 +1,30 @@
+// user login
+user email = mal12@gmail.com
+user name = malak mustafa 
+password = 123456
+
+
+//admin register
+user emain = malakAdmin@gmail.com
+user name= eng malak
+password = 101010
+
+// update user role to admin
+UPDATE public.profiles
+SET role = 'admin'
+WHERE id = (
+  SELECT id FROM auth.users WHERE email = 'malakAdmin@gmail.com'
+);
+
+// insert new product
+insert into products (name, description, price, image_url, category_id)
+values (
+    'Iced Frappe',
+    'A refreshing blend of iced coffee and milk.',
+    50,
+   'iced-drinks',
+   (select id from categories where slug = 'iced-drinks')
+);
+
+//to restart the back:
+sof -i :3000 -t | xargs kill -9
